@@ -19,10 +19,10 @@ import javax.swing.JPanel;
  */
 public class Calculatrice extends JFrame{
 
-        private JPanel container = new JPanel();
+        private JPanel container = new JPanel();//un conteneur principal
         String [] tab_string  = {"1","2","3","4","5","6","7","8","9","0",".","=","C","+","-","*","/"};
         JButton[] tab_button  = new JButton[tab_string.length];
-        private JLabel ecran  = new JLabel();
+        private JLabel ecran  = new JLabel();//affiche contenu ecran claculatrice
         private Dimension dim = new Dimension(50, 40);
         private Double chiffre1;
         private String operateur = "";
@@ -34,37 +34,37 @@ public class Calculatrice extends JFrame{
 
             public Calculatrice(){
 
-                this.setSize(250, 280);
-                this.setTitle("calculette");
+                this.setSize(250, 280);//taille fenetre
+                this.setTitle("calculette");//titre fenetre 
                 
-         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                this.setLocationRelativeTo(null);
-                this.setResizable(false);
+         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//fermer fenetre
+                this.setLocationRelativeTo(null);//fentre au centre ecran
+                this.setResizable(false);//utilisateur peut pas redimenssionner
                 
 
 
                 initComposant();
 
-                this.setContentPane(container);
-                this.setVisible(true);
+                this.setContentPane(container);//container sera conteneur principal de fentre
+                this.setVisible(true);//fenetre visible 
 
             }
 
                     private void initComposant(){
 
                         Font police = new Font("Arial ", Font.BOLD, 20 );
-                        ecran = new JLabel("0");
-                        ecran.setFont(police);
+                        ecran = new JLabel("0");// creer label affiche 0
+                        ecran.setFont(police);//police de l ecran
                         ecran.setHorizontalTextPosition(JLabel.RIGHT);
-                        ecran.setPreferredSize(new Dimension(220, 20));
+                        ecran.setPreferredSize(new Dimension(220, 20));//taille jlabel ecran
 
-                        JPanel operateur = new JPanel();
+                        JPanel operateur = new JPanel();//conteneur operateur 
                         operateur.setPreferredSize(new Dimension(55, 225));
 
-                        JPanel chiffre = new JPanel();
+                        JPanel chiffre = new JPanel();// conteneur chiffres
                         chiffre.setPreferredSize(new Dimension(165, 225));
 
-                        JPanel panEcran = new JPanel();
+                        JPanel panEcran = new JPanel();//contient jlabel ecran
                         panEcran.setPreferredSize(new Dimension(220, 30));
 
                         for(int i = 0; i < tab_string.length; i++){
@@ -111,8 +111,9 @@ public class Calculatrice extends JFrame{
                                break;
 
                                default :
-                               chiffre.add(tab_button[i]);
-                               tab_button[i].addActionListener(new ChiffreListener());
+                               chiffre.add(tab_button[i]);// bouton ajoutes au conteneurs chiffres 
+                               tab_button[i].addActionListener(new ChiffreListener());//ajoute ecouteur evenementa chq btn
+                               //nouvel obj chiffrelitsnr cree et associe au btn
                                break;
                                
                             }
@@ -130,7 +131,8 @@ public class Calculatrice extends JFrame{
                                 public void calcul(){
                                     if(operateur.equals("+")){
                                         chiffre1 = chiffre1 + Double.valueOf(ecran.getText()).doubleValue();
-                                        ecran.setText(String.valueOf(chiffre1));
+                                        //recupere val avant cliquer sur plus et ajouter la 2 eme val saisi
+                                        ecran.setText(String.valueOf(chiffre1));//maj chiffre1
                                     }
 
                                     if(operateur.equals("-")){
@@ -158,15 +160,15 @@ public class Calculatrice extends JFrame{
         class ChiffreListener implements ActionListener  {
             @Override 
             public void actionPerformed(ActionEvent e){
-                String str = ((JButton)e.getSource()).getText();
-                if (update){
-                    update = false;
+                String str = ((JButton)e.getSource()).getText();//renvoie btn clique 
+                if (update){//si il a pas ete mis a jour 
+                    update = false;// eccran ete mis a jour et on affiche direct la vel saisi
                 }
-                    else if(!ecran.getText().equals("0")){
-                        str = ecran.getText() + str ;    
+                    else if(!ecran.getText().equals("0")){// si diff 0 alors 
+                        str = ecran.getText() + str ;    // concatene ce qu il y avait sur ecrzn   btn clique 
                     }
 
-                    ecran.setText(str);
+                    ecran.setText(str);// afficher sur ecran chiffre ou sequences de chiffres 
                 
             }
 
@@ -178,8 +180,8 @@ public class Calculatrice extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                calcul();
-                update = true;
+                calcul();// on fait le calcul
+                update = true;//il faut mettre a jour 
                 clicOperateur = false;
 
                 }
@@ -190,13 +192,14 @@ public class Calculatrice extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(clicOperateur){
+                if(clicOperateur){// si bouton operateur  cliqué on fait direct calcul
                     calcul();
-                    ecran.setText(String.valueOf(chiffre1));
+                    ecran.setText(String.valueOf(chiffre1));// affiche la nouvelle val de chiffre1
                 }
                 else {
-                    chiffre1 = Double.valueOf(ecran.getText()).doubleValue();
-                    clicOperateur = true;
+                    chiffre1 = Double.valueOf(ecran.getText()).doubleValue();// si plus clique mais pas saisi val
+                    // on affiche juste la premiere val saisi
+                    clicOperateur = true;//comme quoi operteur clique 
 
                 }
                 operateur = "+";
@@ -211,7 +214,7 @@ public class Calculatrice extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(clicOperateur){
+                if(clicOperateur){//deja clique sur operateur alors val 1 est stocke dans chiffre1 apres calcul
                     calcul();
                     ecran.setText(String.valueOf(chiffre1));
                 }
@@ -241,7 +244,7 @@ public class Calculatrice extends JFrame{
 
                 }
                 operateur = "*";
-                update = true;
+                update = true;//ecran mis a jour 
                 
             }
             
